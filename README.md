@@ -1,6 +1,7 @@
-# Login and Registration
+# Login and Registration API
 
-This is a practice project to learn how to implement user authentication with Node.js, Express, and MongoDB.
+This project is a practice implementation of user authentication using Node.js, Express, and MongoDB.
+
 It includes:
 
 - User registration.
@@ -10,49 +11,44 @@ It includes:
 
 > ⚠️ Note: This project can be expanded in the future.
 
+---
+
 ## How to Run
 
-1. Clone the project:
+1. Clone the repository:
 
 ```bash
 git clone <repo-url>
 ```
 
-2. Install Dependencies:
+2. Install dependencies:
 
 ```bash
-npm i
+npm install
 ```
 
-3. Create .env file in the root of the project then define all the environment variables used in './config/env.js'.
-   For example:
-   PORT=8080
-   JWT_SECURE=YOUR_SECRET_KEY
+3. Create a `.env` file in the root directory and define all environment variables used in `./config/env.js`.
+   Example:
 
-   > Make sure to replace the value with your own configuration.
+```
+PORT=8080
+ACCESS_JWT_SECRET=YOUR_SECRET_KEY
+```
 
-4. Start the app:
+> Ensure to replace value with your own secure configuration.
+
+4. Start the application:
 
 ```bash
 npm run dev
 ```
 
-Routes
+---
 
-/// Authentication Routes ///
+## Postman Collection
 
-1. /api/v1/auth/sign-up POST {fullname, username, email, password, confirmPassword}
-2. /api/v1/auth/sign-in POST {email/username, password}
-3. /api/v1/auth/log-out POST {-}
+Test the API directly using Postman through the following badge:
 
-/// Google Authentication Routes ///
+(https://www.postman.com/abrar203/nodejs-app/collection/psrfucy/nodejs-app?action=share&creator=32615186)
 
-1. /api/v1/auth/google/ GET Redirect user to google OAuth login page
-2. /api/v1/auth/google/callback GET Receives google response, create jwt, and return token
-
-/// User Routes ///
-
-1. /api/v1/users/ GET {-}
-2. /api/v1/users/profile/:id GET {-}
-3. /api/v1/users/:id DELETE {user ID}
-4. /api/v1/users/profile/:id PUT {user ID}
+> If requests require variables such as `{{auth-token}}`, create a Postman Environment with dummy values for testing.
