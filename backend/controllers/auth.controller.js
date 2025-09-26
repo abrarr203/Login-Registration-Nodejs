@@ -4,14 +4,23 @@ import userModel from '../models/user.model.js';
 import { birthDateValidator, emailValidator, passwordValidator, usernameValidator } from '../utils/validators.js';
 import { generateAccessToken } from '../utils/jwtUtils.js';
 
+export const renderSignInPage = (req, res, next) => {
+    try{
+        res.render('sign-in');
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 export const signUp = async (req, res, next) => {
     // const session = await mongoose.startSession();
     // session.startTransaction();
 
     try{
-        const {fullName, username, email, birthDate, password, confirmPassword} = req.body;
+        const {name, username, email, birthDate, password, confirmPassword} = req.body;
 
-        if(!fullName || !username || !email || !birthDate || !password || !confirmPassword){
+        if(!name || !username || !email || !birthDate || !password || !confirmPassword){
             const error = new Error('Some fields are missing');
             error.statusCode = 400;
             throw error;
@@ -39,7 +48,7 @@ export const signUp = async (req, res, next) => {
 
         // Create new user 
         const newUser = userModel.create([{
-            fullName: fullName,
+            name: name,
             username: username,
             email: email,
             birthDate: birthDate,
@@ -67,6 +76,15 @@ export const signUp = async (req, res, next) => {
     }
 };
 
+export const renderSignUpPage = (req, res, next) => {
+    try{
+        res.render('sign-up');
+    }
+    catch(error){
+        next(error);
+    }
+}
+
 export const signIn = async (req, res, next) => {
     try{
         const {loginId, password} = req.body;
@@ -75,10 +93,9 @@ export const signIn = async (req, res, next) => {
             error.statusCode = 400;
             throw error;
         }
-        let user;
+
         // User can use both email and username to sign in
-        if(loginId.includes('@')) user = await userModel.findOne({email: loginId});
-        else user = await userModel.findOne({username: loginId});
+        const user = loginId.includes('@')? await userModel.findOne({email: loginId}) : await userModel.findOne({username: loginId});
 
         if(!user){
             const error = new Error("User not found");
@@ -99,7 +116,7 @@ export const signIn = async (req, res, next) => {
                 
         res.status(200).json({
             success: true,
-            message: "User logged in successfully",
+            message: `User logged in successfully as ${user.role}`,
             data: {
                 accessToken,
                 user,

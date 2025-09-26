@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { ACCESS_JWT_SECRET, REFRESH_JWT_SECRET } from '../configs/env.js';
+import { ACCESS_JWT_SECRET, REFRESH_JWT_SECRET } from '../backend/configs/env.js';
 
 export const generateAccessToken = (userId) => {
-    return jwt.sign({userId}, ACCESS_JWT_SECRET, {expiresIn: '24h'});
+    return jwt.sign({userId}, ACCESS_JWT_SECRET, {expiresIn: '15m'});
 }
 
 export const generateRefreshToken = (userId) => {
